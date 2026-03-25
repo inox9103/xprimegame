@@ -2,211 +2,550 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Matrix | NTSGROW</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Xprime | Memory Matrix</title>
     <style>
-        :root {
-            --primary: #2ecc71;
-            --dark: #1a1a1a;
-            --light: #f4f4f4;
-            --accent: #e67e22;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--dark);
-            color: var(--light);
-            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, #f8faff 0%, #f0f3fc 100%);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 24px 16px;
+            position: relative;
         }
 
-        /* Home Button Style */
+        /* premium subtle noise texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* home button refined */
         .home-nav {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 28px;
+            left: 28px;
+            z-index: 20;
         }
 
         .btn-home {
             text-decoration: none;
-            color: var(--light);
-            border: 1px solid var(--light);
-            padding: 8px 15px;
-            border-radius: 5px;
+            font-family: inherit;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            color: #1e2a3e;
+            border: 1px solid rgba(100, 116, 139, 0.2);
+            padding: 8px 20px;
+            border-radius: 60px;
             font-size: 0.9rem;
-            transition: 0.3s;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            letter-spacing: 0.3px;
         }
 
         .btn-home:hover {
-            background: var(--light);
-            color: var(--dark);
+            background: white;
+            border-color: #cbd5e1;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            transform: translateY(-1px);
+            color: #0f172a;
         }
 
-        h1 { color: var(--primary); margin-bottom: 5px; letter-spacing: 2px; }
-        .stats { margin-bottom: 20px; font-size: 1.2rem; font-weight: bold; }
+        /* main card container */
+        .game-container {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 56px;
+            padding: 28px 24px 36px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,255,255,0.5);
+            width: 100%;
+            max-width: 540px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
 
+        /* Xprime brand with custom glowing X */
+        .brand {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .xprime {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .glow-x {
+            font-size: 3.2rem;
+            font-weight: 800;
+            display: inline-block;
+            background: linear-gradient(145deg, #2563eb, #7c3aed);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+            animation: pulseX 1.8s infinite ease-in-out;
+            margin-right: 4px;
+            transform: scale(1);
+        }
+
+        @keyframes pulseX {
+            0% { opacity: 0.7; text-shadow: 0 0 0px rgba(37,99,235,0); }
+            50% { opacity: 1; text-shadow: 0 0 12px rgba(59,130,246,0.6); transform: scale(1.02);}
+            100% { opacity: 0.7; text-shadow: 0 0 0px rgba(37,99,235,0); }
+        }
+
+        .prime-text {
+            background: linear-gradient(145deg, #1e293b, #2d3a4e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5b6e8c;
+            letter-spacing: 0.5px;
+            margin-top: -8px;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 8px 0 4px;
+            letter-spacing: -0.3px;
+            text-align: center;
+        }
+
+        .stats-panel {
+            background: #eef2ff;
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 80px;
+            margin: 16px auto 12px;
+            width: fit-content;
+            backdrop-filter: blur(4px);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .stats {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #1e293b, #2c3e66);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .stats span {
+            background: none;
+            color: #2563eb;
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin-left: 8px;
+        }
+
+        /* grid - clean minimalistic white premium tiles */
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 80px);
-            grid-template-rows: repeat(4, 80px);
-            gap: 12px;
-            background: #252525;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #333;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            background: transparent;
+            padding: 16px 8px;
+            margin: 8px 0;
         }
 
         .tile {
-            width: 80px;
-            height: 80px;
-            background: #333;
-            border-radius: 8px;
+            aspect-ratio: 1 / 1;
+            background: #ffffff;
+            border-radius: 24px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(2px);
         }
 
-        .tile.active { background: var(--primary); transform: scale(0.9); }
-        .tile.wrong { background: #e74c3c; animation: shake 0.3s; }
+        .tile.active {
+            background: linear-gradient(145deg, #3b82f6, #2563eb);
+            box-shadow: 0 12px 22px -8px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(59,130,246,0.3);
+            transform: scale(0.94);
+        }
 
-        @keyframes shake {
+        .tile.wrong {
+            background: #ef4444;
+            box-shadow: 0 0 0 2px #fee2e2, 0 0 0 4px rgba(239,68,68,0.2);
+            animation: shakeModern 0.28s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        @keyframes shakeModern {
             0% { transform: translateX(0); }
-            25% { transform: translateX(5px); }
-            50% { transform: translateX(-5px); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
             100% { transform: translateX(0); }
         }
 
         .btn-start {
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: var(--primary);
+            margin-top: 20px;
+            padding: 14px 32px;
+            background: #0f172a;
             border: none;
             color: white;
-            font-weight: bold;
-            border-radius: 50px;
+            font-weight: 600;
+            border-radius: 60px;
             cursor: pointer;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+            font-size: 1rem;
+            transition: all 0.25s;
+            width: 80%;
+            max-width: 240px;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.2);
         }
 
-        @media (max-width: 400px) {
-            .grid { grid-template-columns: repeat(4, 65px); gap: 8px; }
-            .tile { width: 65px; height: 65px; }
+        .btn-start:hover {
+            background: #1e293b;
+            transform: scale(0.97);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .message-area {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: #f1f5f9;
+            padding: 8px 18px;
+            border-radius: 60px;
+            color: #475569;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+        }
+
+        /* responsive */
+        @media (max-width: 500px) {
+            .game-container { padding: 20px 18px 28px; }
+            .grid { gap: 10px; }
+            .tile { border-radius: 20px; }
+            .glow-x { font-size: 2.8rem; }
+            .xprime { font-size: 2.3rem; }
+        }
+
+        @media (max-width: 420px) {
+            .grid { gap: 8px; }
+        }
+
+        footer {
+            margin-top: 18px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-align: center;
+            z-index: 2;
         }
     </style>
 </head>
-<body onclick="playMusic()">
+<body>
 
     <nav class="home-nav">
-        <a href="index.html" class="btn-home">← Back to NTSGROW</a>
+        <a href="index.html" class="btn-home">← Back to Xprime</a>
     </nav>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="game1music.mp3" type="audio/mpeg">
+        <!-- fallback silence: modern browsers handle -->
     </audio>
 
-    <h1>Memory Matrix</h1>
-    <div class="stats">Level: <span id="level">1</span></div>
+    <div class="game-container">
+        <div class="brand">
+            <div class="xprime">
+                <span class="glow-x">X</span><span class="prime-text">prime</span>
+            </div>
+            <div class="sub">cognitive · reflex · mastery</div>
+        </div>
 
-    <div class="grid" id="grid"></div>
+        <h1>Memory Matrix</h1>
 
-    <button class="btn-start" onclick="startGame()" id="startBtn">Start Game</button>
-    <p id="msg" style="margin-top: 20px; color: #888;">Focus on the pattern!</p>
+        <div style="display: flex; justify-content: center;">
+            <div class="stats-panel">
+                <div class="stats">LEVEL <span id="level">1</span></div>
+            </div>
+        </div>
+
+        <div class="grid" id="grid"></div>
+
+        <div style="display: flex; justify-content: center;">
+            <button class="btn-start" id="startBtn">▶ ENTER MATRIX</button>
+        </div>
+        <div id="msg" class="message-area">✨ watch the pattern, repeat the sequence</div>
+    </div>
+    <footer>Xprime · neural challenge</footer>
 
     <script>
-        const grid = document.getElementById('grid');
-        const levelDisplay = document.getElementById('level');
-        const bgMusic = document.getElementById('bgMusic');
-        let level = 1;
-        let sequence = [];
-        let userSequence = [];
-        let isClickable = false;
-        let musicStarted = false;
+        (function() {
+            // DOM elements
+            const gridContainer = document.getElementById('grid');
+            const levelDisplay = document.getElementById('level');
+            const bgMusic = document.getElementById('bgMusic');
+            const startButton = document.getElementById('startBtn');
+            const msgDiv = document.getElementById('msg');
 
-        // Auto-play music handler
-        function playMusic() {
-            if(!musicStarted) {
-                bgMusic.play();
-                musicStarted = true;
-            }
-        }
+            // Game state
+            let level = 1;
+            let sequence = [];          // indices of tiles to remember
+            let userSequence = [];
+            let isClickable = false;
+            let musicStarted = false;
+            let gameActive = false;
+            let timeoutRef = null;       // to avoid race conditions
 
-        for (let i = 0; i < 16; i++) {
-            const tile = document.createElement('div');
-            tile.classList.add('tile');
-            tile.addEventListener('click', () => handleTileClick(i));
-            grid.appendChild(tile);
-        }
+            // Create tiles (16 tiles)
+            const TOTAL_TILES = 16;
+            let tiles = [];
 
-        function startGame() {
-            playMusic();
-            level = 1;
-            document.getElementById('startBtn').style.visibility = 'hidden';
-            nextLevel();
-        }
-
-        function nextLevel() {
-            userSequence = [];
-            isClickable = false;
-            levelDisplay.innerText = level;
-            
-            // Difficulty logic: More tiles as you progress
-            sequence = [];
-            let tilesToShow = 2 + Math.floor(level / 1.5); 
-            if(tilesToShow > 12) tilesToShow = 12; // Cap max difficulty
-
-            while(sequence.length < tilesToShow) {
-                let r = Math.floor(Math.random() * 16);
-                if(!sequence.includes(r)) sequence.push(r);
+            function buildGrid() {
+                gridContainer.innerHTML = '';
+                for (let i = 0; i < TOTAL_TILES; i++) {
+                    const tile = document.createElement('div');
+                    tile.classList.add('tile');
+                    tile.setAttribute('data-index', i);
+                    tile.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        handleTileClick(i);
+                    });
+                    gridContainer.appendChild(tile);
+                    tiles.push(tile);
+                }
             }
 
-            showSequence();
-        }
+            // Helper: reset all visual active/wrong classes
+            function resetTileStyles() {
+                tiles.forEach(t => {
+                    t.classList.remove('active', 'wrong');
+                });
+            }
 
-        function showSequence() {
-            const tiles = document.querySelectorAll('.tile');
-            tiles.forEach(t => t.classList.remove('active', 'wrong'));
+            // Attempt to autoplay music with user interaction (first click anywhere)
+            function initMusicOnUserGesture() {
+                if (!musicStarted && gameActive === false) {
+                    // but we can also trigger via start button, but to be robust: start button will call playMusic
+                }
+            }
 
-            // Pattern flash speed increases with level
-            let displayTime = Math.max(1200 - (level * 50), 600); 
+            function playMusic() {
+                if (!musicStarted) {
+                    const playPromise = bgMusic.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            // Auto-play prevented, but we will retry on start button again.
+                            console.log("Audio autoplay blocked, will retry on click");
+                        });
+                    }
+                    musicStarted = true;
+                }
+            }
 
-            setTimeout(() => {
-                sequence.forEach(index => tiles[index].classList.add('active'));
-                setTimeout(() => {
-                    tiles.forEach(t => t.classList.remove('active'));
-                    isClickable = true;
-                }, displayTime);
-            }, 600);
-        }
+            // Stop any ongoing timers to avoid conflicts
+            function clearPendingTimeouts() {
+                if (timeoutRef) {
+                    clearTimeout(timeoutRef);
+                    timeoutRef = null;
+                }
+            }
 
-        function handleTileClick(index) {
-            if (!isClickable) return;
-            const tiles = document.querySelectorAll('.tile');
+            // Generate sequence based on level difficulty (unique tiles)
+            function generateSequence() {
+                let tilesToShow = 2 + Math.floor(level / 1.4);
+                if (tilesToShow > TOTAL_TILES) tilesToShow = TOTAL_TILES;
+                if (tilesToShow < 2) tilesToShow = 2;
+                
+                const newSeq = [];
+                const available = Array.from({length: TOTAL_TILES}, (_, i) => i);
+                // shuffle copy to pick random distinct tiles
+                for (let i = available.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [available[i], available[j]] = [available[j], available[i]];
+                }
+                for (let i = 0; i < tilesToShow; i++) {
+                    newSeq.push(available[i]);
+                }
+                return newSeq;
+            }
 
-            if (sequence.includes(index)) {
-                if (!userSequence.includes(index)) {
-                    userSequence.push(index);
-                    tiles[index].classList.add('active');
+            // Visual sequence display with dynamic speed (gets faster)
+            function showSequence() {
+                resetTileStyles();
+                isClickable = false;
+                msgDiv.innerHTML = "🌀 memorizing sequence ...";
+                msgDiv.style.opacity = '0.8';
+                
+                // speed increases with level: faster reaction needed
+                let baseDelayBetween = Math.max(900 - (level * 28), 480);
+                const highlightDuration = 400;
+                let currentDelay = 300; // initial small pause
+                
+                // Clone the sequence to iterate
+                const seqCopy = [...sequence];
+                
+                function highlightNext(index) {
+                    if (index >= seqCopy.length) {
+                        // all tiles flashed, now reset and make clickable after a short pause
+                        clearPendingTimeouts();
+                        timeoutRef = setTimeout(() => {
+                            resetTileStyles();
+                            isClickable = true;
+                            msgDiv.innerHTML = "🎯 your turn — click tiles in correct order";
+                            msgDiv.style.opacity = '1';
+                            timeoutRef = null;
+                        }, 280);
+                        return;
+                    }
                     
-                    if (userSequence.length === sequence.length) {
-                        isClickable = false;
-                        level++;
-                        setTimeout(nextLevel, 800);
+                    const tileIdx = seqCopy[index];
+                    if (tiles[tileIdx]) {
+                        tiles[tileIdx].classList.add('active');
+                        timeoutRef = setTimeout(() => {
+                            if (tiles[tileIdx]) tiles[tileIdx].classList.remove('active');
+                            // schedule next
+                            timeoutRef = setTimeout(() => {
+                                highlightNext(index + 1);
+                            }, baseDelayBetween * 0.7);
+                        }, highlightDuration);
+                    } else {
+                        highlightNext(index + 1);
                     }
                 }
-            } else {
-                tiles[index].classList.add('wrong');
-                isClickable = false;
-                setTimeout(() => {
-                    alert("Game Over! Max Level: " + level);
-                    location.reload();
-                }, 300);
+                
+                // start after small stability
+                timeoutRef = setTimeout(() => {
+                    highlightNext(0);
+                }, 240);
             }
-        }
-    </script>
-</body>
-</html>
+            
+            // Core next level logic
+            function nextLevel() {
+                if (!gameActive) return;
+                clearPendingTimeouts();
+                userSequence = [];
+                isClickable = false;
+                resetTileStyles();
+                levelDisplay.innerText = level;
+                
+                // generate fresh sequence for this level
+                sequence = generateSequence();
+                // show the pattern
+                showSequence();
+            }
+            
+            // Game Over handler
+            function gameOver() {
+                if (!gameActive) return;
+                gameActive = false;
+                isClickable = false;
+                clearPendingTimeouts();
+                
+                const finalLevel = level;
+                msgDiv.innerHTML = `💀 GAME OVER · reached level ${finalLevel}`;
+                msgDiv.style.background = "#fee2e2";
+                msgDiv.style.color = "#b91c1c";
+                
+                // show start button again
+                startButton.style.visibility = 'visible';
+                startButton.innerText = '🔁 PLAY AGAIN';
+                
+                // disable all tile clicks effect visually
+                tiles.forEach(t => {
+                    t.style.cursor = 'default';
+                });
+                
+                // Optional small delay before enabling restart to prevent accidental click
+            }
+            
+            // Handle user click
+            function handleTileClick(index) {
+                if (!gameActive || !isClickable) return;
+                
+                // if sequence includes index and not yet clicked in this turn
+                if (sequence.includes(index)) {
+                    // check for duplicate click prevention: must click in order, but not same tile twice in userSequence
+                    if (userSequence.includes(index)) {
+                        // already clicked this tile in current pattern, do nothing but maybe small feedback?
+                        tiles[index].classList.add('wrong');
+                        setTimeout(() => tiles[index].classList.remove('wrong'), 250);
+                        return;
+                    }
+                    
+                    // Correct tile selection
+                    userSequence.push(index);
+                    tiles[index].classList.add('active');
+                    // subtle haptic flash (visual)
+                    setTimeout(() => {
+                        if (tiles[index]) tiles[index].classList.remove('active');
+                    }, 220);
+                    
+                    // Check if user completed full sequence
+                    if (userSequence.length === sequence.length) {
+                        // Perfect! advance level
+                        isClickable = false;
+                        level++;
+                        msgDiv.innerHTML = "✔️ PERFECT! advancing...";
+                        msgDiv.style.background = "#dcfce7";
+                        msgDiv.style.color = "#166534";
+                        clearPendingTimeouts();
+                        timeoutRef = setTimeout(() => {
+                            if (gameActive) {
+                                nextLevel();
+                                msgDiv.style.background = "#f1f5f9";
+                                msgDiv.style.color = "#475569";
+                            }
+                        }, 780);
+                    }
+                } else {
+                    // wrong tile selected -> game over
+                    tiles[index].classList.add('wrong');
+                    isClickable = false;
+                    playMusic(); // ensure music context but game over soon
+                    msgDiv.innerHTML = `❌ wrong tile! Game Over at Level ${level}`;
+                    msgDiv.style.background = "#fee2e2";
+                    msgDiv.style.color = "#b91c1c";
+                    gameActive = false;
+                    clearPendingTimeouts();
+                    setTimeout(() => {
+                        alert(`🌀 GAME OVER · You reached level ${level}\nTap "PLAY AGAIN" to challenge the Matrix.`);
+                        // restart UI: show start button but do not auto reset
+                        startButton.style.visibility = 'visible';
+                        startButton.innerText = '⟳ RESTART GAME';
+                        tiles.forEach(t => {
+                            t.classList.remove('active', 'wrong');
+                        });
+                    }, 280
