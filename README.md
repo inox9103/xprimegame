@@ -1,10 +1,10 @@
-# 🧠 NTSGROW - The Ultimate Brain Training Hub
+# 🧠 ForzoGames - The Ultimate Brain Training Hub
 
-**NTSGROW** is a high-performance web platform designed to enhance cognitive functions through interactive, wordless gaming. Built with a "Classic-Modern" aesthetic, it focuses on sharpening memory, logic, reaction time, and spatial awareness.
+**ForzoGames** is a high-performance web platform designed to enhance cognitive functions through interactive, wordless gaming. Built with a "Classic-Modern" aesthetic, it focuses on sharpening memory, logic, reaction time, and spatial awareness.
 
 ## 🚀 Live Website
 Experience the games here: 
-👉 [https://inox9103.github.io/ntsgrowgames/index.html](https://inox9103.github.io/xprimegame/)
+👉 [https://inox9103.github.io/forzogames/index.html](https://inox9103.github.io/forzogames)
 
 ---
 
